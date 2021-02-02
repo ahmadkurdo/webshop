@@ -504,3 +504,4 @@ src/**/*.map
 .idea/
 *.swp
 *.iml
+*.eslint*
