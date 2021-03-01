@@ -12,8 +12,6 @@ namespace webshop.Models
             modelBuilder.Entity<Option>().HasKey(t => t.Id);
             modelBuilder.Entity<Product>().HasKey(t => t.Id);
             modelBuilder.Entity<Option>().HasOne(t => t.Product).WithMany( x=> x.Options).HasForeignKey( y => y.ProductId);
-            
-      
         }
             
         public DbSet<Product> Products { get; set; }

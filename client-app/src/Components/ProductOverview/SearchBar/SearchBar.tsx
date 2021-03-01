@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useReducer, useRef, useState } from 'react'
 import { Search, Grid, Header, Segment, Label, SearchResultData, SearchResultProps, SearchProps, Container } from 'semantic-ui-react'
-import { Product, ReducerSearch, SearchBarState } from '../Types/Types'
-import { exampleReducer } from '../Utils/ReducerFunctions'
-import { searchResultRenderer } from '../Utils/Renderers'
+
+import { Product } from '../Product/ProductTypes'
+import { SearchBarState } from './SearchBarState'
+import { exampleReducer, searchResultRenderer } from './SearchBarUtils'
 
 export const  SearchBar : React.FC<SearchBarState<Product[]>> = (props : SearchBarState<Product[]>) => {
   const [state, dispatch] = useReducer(exampleReducer, props)

@@ -1,10 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Accordion, Container, Grid, Header, Item, Segment } from 'semantic-ui-react';
-import { HttpGet } from '../Api/Api';
-import { Async, Product, ProductOverviewState } from '../Types/Types';
-import { ProductCard } from './ProductCard';
-import { SearchBar } from './SearchBar';
+import { ProductCard } from './Product/ProductCard';
+import { ProductOverviewState } from './ProductOverviewState';
+import { SearchBar } from './SearchBar/SearchBar';
 const panels = [
   {
     key: 'what-is-dog',
