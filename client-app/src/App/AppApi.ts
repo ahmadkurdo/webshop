@@ -1,61 +1,28 @@
-import { Entity } from "ts-lenses";
-import { Product } from "../Components/ProductOverview/Product/ProductTypes";
-import { AppState } from "./AppState";
-import { Action, ApiState, Fun, HttpResponse, Setter } from "./AppTypes";
+import { SetStateAction } from "react";
+import { Fun, HttpResponse} from "./AppTypes";
 import { MakeCallable } from "./AppUtils";
 
-//To Do: Make Funtion retry for x amount of time
-export async function HttpGet<T>(request: RequestInfo): Promise<HttpResponse<T>> {
-    const response: HttpResponse<T> = await fetch(request);
-    response.parsedBody = await response.json();
-    return response;
-  }
-
-
-const repeatUntill = <I,O>(repeat:Fun<I,Promise<HttpResponse<O>>>, untill: Fun<O ,Boolean>, param : I, n: number) : ApiState<O>=> {
-    const apistate : ApiState<O> =  {
-      data: undefined,
-      status: 'Loading'
-    }
-
-    console.log('Retries:', n)
-
-    console.log('Api state:', apistate)
-
-    repeat(param)
-    .then( response => {
-      console.log('Executed then ')
-      apistate.data = response.parsedBody
-    })
-    .catch( response => apistate.status = 'Failed')
+const repeatUntill = <I,O,S>(repeat:Fun<I,Promise<HttpResponse<O>>>, param : I, n: number, curryNewVal:Fun<O,SetStateAction<S>>, setState:React.Dispatch<React.SetStateAction<S>>) : void => {
     if(n<= 0){
-        apistate.status = 'Failed'
-        return apistate
-      }
-    if(apistate.data !== undefined && untill(apistate.data)){
-      apistate.status = 'Loaded'
-      console.log("IM HERE")
-      return apistate
-      
-      
+      return 
     }
-
-    repeatUntill(repeat,untill,param,--n)
-
-
+    console.log("Number of retries", n)
+    repeat(param)
+    .then( response => setState(curryNewVal(response.parsedBody as O)))
+    .catch( error => {     
+      console.error(error)
+      return repeatUntill(repeat,param,--n, curryNewVal,setState)})
   }
   
-
-  
-export const asynco = <T,S>(setter: Fun<ApiState<T>,Action<S>>, request: RequestInfo)  => {
-  const doApiCall =  MakeCallable<RequestInfo,Promise<HttpResponse<T>>>( async (requestUrl)  => {
-    const response: HttpResponse<T> = await fetch(requestUrl);
+export const asynco = <O,S>(setter: Fun<O,SetStateAction<S>>, request: RequestInfo, setState:React.Dispatch<React.SetStateAction<S>>)  => {
+  const doApiCall =  MakeCallable<RequestInfo,Promise<HttpResponse<O>>>( async (requestUrl)  => {
+    const response: HttpResponse<O> = await fetch(requestUrl);
     response.parsedBody = await response.json();
     return response;
   })
-  const setApiValue = MakeCallable<ApiState<T>,Action<S>>(setter)
-  const promiseIsSucessful =  MakeCallable<T,boolean >( x => x !== undefined )
-  const repeatApiCall = MakeCallable<RequestInfo,ApiState<T>>(requestUrl => repeatUntill<RequestInfo,T>(doApiCall,promiseIsSucessful,requestUrl,10))
-  return repeatApiCall.then(setApiValue)(request)
+
+  const setApiValue = MakeCallable<O,SetStateAction<S>>(setter)
+  const repeatApiCall = MakeCallable<RequestInfo,void>(requestUrl => repeatUntill<RequestInfo,O,S>(doApiCall, requestUrl,10, setApiValue, setState))
+  return repeatApiCall(request)
   }
 

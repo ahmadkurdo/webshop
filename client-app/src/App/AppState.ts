@@ -7,7 +7,7 @@ export interface AppState{
 
 export const initialState = (): AppState => (
     {    productOverviewState : {
-           products : {data:[] , kind:'loading'},
+           products : {data:[] , kind:'loaded'},
        
            searchbarState : {
            loading : false,
