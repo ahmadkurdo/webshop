@@ -1,10 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Accordion, Container, Grid, Header, Item, Segment } from 'semantic-ui-react';
-import { HttpGet } from '../Api/Api';
-import { Async, Product, ProductOverviewState } from '../Types/Types';
-import { ProductCard } from './ProductCard';
-import { SearchBar } from './SearchBar';
+import { ProductCard } from './Product/ProductCard';
+import { ProductOverviewState } from './ProductOverviewState';
+import { SearchBar } from './SearchBar/SearchBar';
 const panels = [
   {
     key: 'what-is-dog',
@@ -46,15 +45,10 @@ const panels = [
 ]
 
 
-  
-
-
-
 export const ProductOverview : React.FC<ProductOverviewState> = (props : ProductOverviewState) =>  {
-    
-    
+      
     return (
-      props.products.kind =="loaded" ? 
+      props.products.data !="loading" && props.products.data !="failed" ? 
       <div>
       <Segment>
           <SearchBar  {...props.searchbarState}/>
@@ -71,7 +65,7 @@ export const ProductOverview : React.FC<ProductOverviewState> = (props : Product
               <Segment >
                 {props.products.data != undefined ?
                 <Item.Group divided>
-                    {props.products.data.map(product => (<ProductCard key={product.id}  {...product}/>))}
+                    {props.products.data.data.map(product => (<ProductCard key={product.id}  {...product}/>))}
                 </Item.Group>
                 : <p>Loading</p>}
               </Segment>

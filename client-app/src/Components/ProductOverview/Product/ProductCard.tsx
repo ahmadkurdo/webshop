@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Icon, Item, Rating } from 'semantic-ui-react';
-import { Product } from '../Types/Types';
+import { Product } from './ProductTypes';
 
 export const ProductCard : React.FC<Product> = (props : Product) => {
     return (
