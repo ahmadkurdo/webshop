@@ -3,9 +3,6 @@ import { Setter } from "../../../App/AppTypes"
 import { Product } from "../Product/ProductTypes"
 import { SearchBarState } from "./SearchBarState"
 import { ReducerSearch } from "./SearchBarTypes"
-import React from "react";
-import Label from "semantic-ui-react/dist/commonjs/elements/Label/Label"
-import { SearchResultProps } from "semantic-ui-react"
 
 export function exampleReducer(state : SearchBarState<Product[]>, action : ReducerSearch,) {
     switch (action.type) {
@@ -23,6 +20,4 @@ export function exampleReducer(state : SearchBarState<Product[]>, action : Reduc
     }
   }
 
-
-
-export const searchResultRenderer : (p: SearchResultProps) => React.ReactElement = (item) => <Label content={item.name}/>
+// export const searchResultRenderer : (p: SearchResultProps) => React.ReactElement = (item) => <Label content={item.name}/>
