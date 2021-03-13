@@ -1,4 +1,4 @@
-import { Async } from "../../App/AppTypes";
+import { Async, Fun } from "../../App/AppTypes";
 import { Product } from "./Product/ProductTypes";
 import { SearchBarState } from "./SearchBar/SearchBarState";
 

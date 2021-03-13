@@ -45,15 +45,10 @@ const panels = [
 ]
 
 
-  
-
-
-
 export const ProductOverview : React.FC<ProductOverviewState> = (props : ProductOverviewState) =>  {
-    
-    
+      
     return (
-      props.products.kind =="loaded" ? 
+      props.products.data !="loading" && props.products.data !="failed" ? 
       <div>
       <Segment>
           <SearchBar  {...props.searchbarState}/>
@@ -70,7 +65,7 @@ export const ProductOverview : React.FC<ProductOverviewState> = (props : Product
               <Segment >
                 {props.products.data != undefined ?
                 <Item.Group divided>
-                    {props.products.data.map(product => (<ProductCard key={product.id}  {...product}/>))}
+                    {props.products.data.data.map(product => (<ProductCard key={product.id}  {...product}/>))}
                 </Item.Group>
                 : <p>Loading</p>}
               </Segment>

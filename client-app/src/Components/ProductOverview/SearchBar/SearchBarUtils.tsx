@@ -23,7 +23,6 @@ export function exampleReducer(state : SearchBarState<Product[]>, action : Reduc
     }
   }
 
-export const setSearchBarState: Setter<SearchBarState<Product[]>, AppState>  = 
-  (newValue:SearchBarState<Product[]>) => (prevState:AppState) =>   ({...prevState, searchbarState: newValue})
+
 
 export const searchResultRenderer : (p: SearchResultProps) => React.ReactElement = (item) => <Label content={item.name}/>

@@ -3,8 +3,7 @@ export interface HttpResponse<T> extends Response {
 }
 
 export interface Async<T>{
-    data: T,
-    kind : 'loading'| 'loaded'
+    data: 'failed' | {status: 'loaded', data: T} | 'loading'
 }
 
 export interface Fun<input,output>{
