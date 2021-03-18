@@ -1,80 +1,28 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { Accordion, Container, Grid, Header, Item, Segment } from 'semantic-ui-react';
+import { Grid } from '@material-ui/core';
+import * as React from 'react'
+import { AppHeader } from '../../App/AppHeader';
+import { AppState } from '../../App/AppState';
+import { Updater } from '../../App/AppTypes';
 import { ProductCard } from './Product/ProductCard';
+import { Product } from './Product/ProductTypes';
 import { ProductOverviewState } from './ProductOverviewState';
-import { SearchBar } from './SearchBar/SearchBar';
-const panels = [
-  {
-    key: 'what-is-dog',
-    title: 'What is a dog?',
-    content: [
-      'A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a welcome',
-      'guest in many households across the world.',
-    ].join(' '),
-  },
-  {
-    key: 'kinds-of-dogs',
-    title: 'What kinds of dogs are there?',
-    content: [
-      'There are many breeds of dogs. Each breed varies in size and temperament. Owners often select a breed of dog',
-      'that they find to be compatible with their own lifestyle and desires from a companion.',
-    ].join(' '),
-  },
-  {
-    key: 'acquire-dog',
-    title: 'How do you acquire a dog?',
-    content: {
-      content: (
-        <div>
-          <p>
-            Three common ways for a prospective owner to acquire a dog is from
-            pet shops, private owners, or shelters.
-          </p>
-          <p>
-            A pet shop may be the most convenient way to buy a dog. Buying a dog
-            from a private owner allows you to assess the pedigree and
-            upbringing of your dog before choosing to take it home. Lastly,
-            finding your dog from a shelter, helps give a good home to a dog who
-            may not find one so readily.
-          </p>
-        </div>
-      ),
-    },
-  },
-]
-
-
-export const ProductOverview : React.FC<ProductOverviewState> = (props : ProductOverviewState) =>  {
-      
+//  const alert = (e: any) : any => alert(e)
+export const renderProducts  = (p: Product, e?: Updater<Product>) : JSX.Element =>  (<ProductCard product={p} addToCart={e}/>)
+export const ProductOverview : React.FC<AppState> = (props : AppState) =>  {
+  
     return (
-      props.products.data !="loading" && props.products.data !="failed" ? 
-      <div>
-      <Segment>
-          <SearchBar  {...props.searchbarState}/>
-        </Segment>
-
-        <Container fluid>
-          <Grid >
-            <Grid.Column width={4} >
-              <Segment>
-              <Accordion fluid defaultActiveIndex={[0,1,2]} panels={panels} exclusive={false}/>
-              </Segment>
-            </Grid.Column>
-            <Grid.Column width={10}>
-              <Segment >
-                {props.products.data != undefined ?
-                <Item.Group divided>
-                    {props.products.data.data.map(product => (<ProductCard key={product.id}  {...product}/>))}
-                </Item.Group>
-                : <p>Loading</p>}
-              </Segment>
-          </Grid.Column>
+      props.productOverviewState.products.data != "loading" && props.productOverviewState.products.data != "failed" && props.productOverviewState.addToCart !== undefined?
+      <>
+      <Grid  spacing={3}>
+        <Grid item xs={12} md={12}>
+          <AppHeader {...props.headerState}/>
         </Grid>
-      </Container>
-    </div> : <p>loading</p>
-
-
+      </Grid>
+      <Grid container   spacing={3} alignItems="center" justify="center" direction="row">
+        { props.productOverviewState.products.data.data.map( p => renderProducts(p, props.productOverviewState.addToCart))}
+      </Grid>
+      </> :
+      <p>loading</p>
     )
-    
 }
+

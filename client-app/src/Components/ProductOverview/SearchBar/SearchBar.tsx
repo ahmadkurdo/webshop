@@ -1,35 +1,37 @@
-import React, { useCallback, useEffect, useReducer, useRef, useState } from 'react'
-import { Search, Grid, Header, Segment, Label, SearchResultData, SearchResultProps, SearchProps, Container } from 'semantic-ui-react'
+// import React, { useCallback, useEffect, useReducer, useRef, useState } from 'react'
+// import { Search, Grid, Header, Segment, Label, SearchResultData, SearchResultProps, SearchProps, Container } from 'semantic-ui-react'
 
-import { Product } from '../Product/ProductTypes'
-import { SearchBarState } from './SearchBarState'
-import { exampleReducer, searchResultRenderer } from './SearchBarUtils'
+// import { Product } from '../Product/ProductTypes'
+// import { SearchBarState } from './SearchBarState'
+// import { exampleReducer, searchResultRenderer } from './SearchBarUtils'
 
-export const  SearchBar : React.FC<SearchBarState<Product[]>> = (props : SearchBarState<Product[]>) => {
-  const [state, dispatch] = useReducer(exampleReducer, props)
-  const {loading, results, value} = state
-  const handleSearchChange = useCallback((e,data) => {
-    dispatch({ type: 'START_SEARCH', query: data.value })
-      if (data.value.length === 0) {
-        dispatch({ type: 'CLEAN_QUERY' })
-        return
-      } 
-      dispatch({
-        type: 'FINISH_SEARCH',
-        results:  props.items.filter(product => product.name.includes(data.value)),
-      })
-  }, [state.items])
+// export const  SearchBar : React.FC<SearchBarState<Product[]>> = (props : SearchBarState<Product[]>) => {
+//   const [state, dispatch] = useReducer(exampleReducer, props)
+//   const {loading, results, value} = state
+//   const handleSearchChange = useCallback((e,data) => {
+//     dispatch({ type: 'START_SEARCH', query: data.value })
+//       if (data.value.length === 0) {
+//         dispatch({ type: 'CLEAN_QUERY' })
+//         return
+//       } 
+//       dispatch({
+//         type: 'FINISH_SEARCH',
+//         results:  props.items.filter(product => product.name.includes(data.value)),
+//       })
+//   }, [state.items])
 
-  return (
-        <Search
-          loading={loading}
-          onResultSelect={(e, selected) =>
-            console.log(selected)
-          }
-          onSearchChange={handleSearchChange}
-          results={results}
-          value={value}
-          resultRenderer={searchResultRenderer}
-        />
-  )
-}
+//   return (
+//         <Search
+//           loading={loading}
+//           onResultSelect={(e, selected) =>
+//             console.log(selected)
+//           }
+//           onSearchChange={handleSearchChange}
+//           results={results}
+//           value={value}
+//           resultRenderer={searchResultRenderer}
+//         />
+//   )
+// }
+
+export const x =1

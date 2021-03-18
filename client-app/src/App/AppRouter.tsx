@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from "react"
+import * as React from 'react'
+import  { useEffect, useState } from "react"
 import { Route } from "react-router-dom"
 import { Product } from "../Components/ProductOverview/Product/ProductTypes"
 import { ProductOverview } from "../Components/ProductOverview/ProductOverview"
 import { setProductOverView, setProducts, setSearchBarItems } from "../Components/ProductOverview/ProductOverviewUtils"
-import { AppState } from "./AppState"
+import { AppHeader } from "./AppHeader"
+import { AppState, initialState } from "./AppState"
+import { handelSearch } from "./AppUtils"
+// import { setUpdater } from "./AppUtils"
 export async function HttpGet<T>(
     request: RequestInfo
   ): Promise<HttpResponse<T>> {
@@ -17,17 +21,22 @@ export async function HttpGet<T>(
     parsedBody?: T;
   }
   
-export const Router : React.FC<AppState> = (initialState : AppState) =>  {
-    const [appState, setAppstate] = useState<AppState>(() => initialState)
+export const Router : React.FC = () =>  {
+    const [appState, setAppstate] = useState<AppState>(() => initialState())
     useEffect(() => {
-        HttpGet<Product[]>('http://localhost:5000/products/1').then(response => {
+        setAppstate(initialState(setAppstate))
+        HttpGet<Product[]>('http://localhost:5000/products/1').then(response => { 
+        [setProducts].map(setter => response.parsedBody != undefined && response.ok? setAppstate(setter((response.parsedBody))): undefined)
         
-        [setProducts, setSearchBarItems].map(setter => response.parsedBody != undefined && response.ok? setAppstate(setter((response.parsedBody))): undefined)
-      
     })
     },[])
+
+    useEffect(() => {
+      console.log(appState)      
+  })
     
-    return (        
-        <Route path="/" render={()  => <ProductOverview {...appState.productOverviewState}/>}/>
+    return (       
+      appState.productOverviewState.products.data != "loading" && appState.productOverviewState.products.data != "failed"? 
+        <Route path="/" render={()  => <ProductOverview {...appState}/>}/> : <p>loading</p>        
     )
 }
