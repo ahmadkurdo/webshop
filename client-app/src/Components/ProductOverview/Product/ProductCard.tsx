@@ -46,35 +46,3 @@ export const ProductCard : React.FC<Product> = (props : Product) =>  {
 
 
 
-// body: Ruime, 3D zakken zijn voorop dit bomberjack geplaatst en hebben een verborgen klittenbandsluiting onder de klep. Langs de rits is een geweven tape geplaatst met een G-Star RAW reliëf print, waaronder een ritszak is verwerkt. Dit jack krijgt meer volume wanneer de banden in de taille worden aangetrokken.
-// Header: ASOS DESIGN classic rigid jeans in black
-//media" https://oldnavy.gap.com/webcontent/0017/162/066/cn17162066.jpg
-
-// import React from 'react';
-// import { Button, Icon, Item, Rating } from 'semantic-ui-react';
-// import { Product } from './ProductTypes';
-
-// export const ProductCard : React.FC<Product> = (props : Product) => {
-//     return (
-//             <Item>
-//                 <Item.Image height="210" width="160" src= {props.image} />
-//                 <Item.Content>
-//                     <Item.Header as='a'>{props.name}</Item.Header>
-//                     <Item.Meta>
-//                     <span className='cinema'>{props.options?.map( options => options.name + '|')}</span>
-//                     </Item.Meta>
-//                     <Rating icon='star' defaultRating={3} maxRating={4} />
-//                     <Item.Description>{props.description}</Item.Description>
-//                     <Item.Extra>
-//                         <Button primary floated='right'>
-//                             <Icon name='add to cart' />
-//                         </Button>
-//                     </Item.Extra>
-//                 </Item.Content>
-//             </Item>
-//     )
-// }
-
-
-
-

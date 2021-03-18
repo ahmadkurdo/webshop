@@ -2,6 +2,7 @@ import { SetStateAction } from "react";
 import { Product } from "../Components/ProductOverview/Product/ProductTypes";
 import { ProductOverviewState } from "../Components/ProductOverview/ProductOverviewState";
 import { SearchBarState } from "../Components/ProductOverview/SearchBar/SearchBarState";
+import { ShoppingCart } from "../Components/ShoppingCart/ShoppingCartTypes";
 import { Fun } from "./AppTypes";
 import { handelSearch, makeFun } from "./AppUtils";
 
@@ -9,6 +10,7 @@ export interface AppState{
     headerState : HeaderState
     productOverviewState : ProductOverviewState
     updateAppState?: React.Dispatch<React.SetStateAction<AppState>>
+    shoppingCart : ShoppingCart
     
     
   }
@@ -38,7 +40,11 @@ export const initialState = (stateSetter?:React.Dispatch<React.SetStateAction<Ap
             updateItems: stateSetter? createUpdater(handelSearch, stateSetter) : undefined
           }          
         },
-        
+
+        shoppingCart: {
+          products : []
+        }
+
         
        })
 

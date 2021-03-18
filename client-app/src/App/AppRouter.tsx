@@ -36,6 +36,6 @@ export const Router : React.FC = () =>  {
     
     return (       
       appState.productOverviewState.products.data != "loading" && appState.productOverviewState.products.data != "failed"? 
-        <Route path="/" render={()  => <ProductOverview {...appState}/>}/> : <p>lopaidng</p>        
+        <Route path="/" render={()  => <ProductOverview {...appState}/>}/> : <p>loading</p>        
     )
 }

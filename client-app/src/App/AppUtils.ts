@@ -23,3 +23,4 @@ sbs.set("items", p => state.productOverviewState.products.data !== 'loading' && 
 export const filterProduct = makeFun<string,Action<Product[]>>((querystring:string) => (products: Product[]) =>  products.filter(product =>  product.name !== "" && product.name.includes(querystring)))
 export const handelSearch = filterProduct.then(updateSearchItems)
 
+export const addItemsToShoppingCart = makeFun<Product,SetStateAction<AppState>>((itemToAdd: Product) => (state: AppState) => Entity(state).setIn("headerState", hs => hs.set("shoppingCartItems", prev => prev + 1)).setIn("shoppingCart", sc => sc.set("products", p => p.concat(itemToAdd))).commit())
