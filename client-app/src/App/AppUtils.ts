@@ -3,6 +3,8 @@ import { Entity } from 'ts-lenses'
 import { Product } from '../Components/ProductOverview/Product/ProductTypes'
 import { AppState } from './AppState'
 import { Action, Async, Fun } from './AppTypes'
+import { useHistory } from 'react-router-dom'
+
 
 export const makeFun = <input, output>(f: (_: input) => output): Fun<input, output> => {
     let fun = f as Fun<input, output>
@@ -44,3 +46,5 @@ export const filterProduct = makeFun<string, Action<Product[]>>((querystring: st
     products.filter((product) => product.name !== '' && product.name.includes(querystring))
 )
 export const handelSearch = filterProduct.then(updateSearchItems)
+
+export const goToCartPage = (browse: any) => browse.push("/cart")

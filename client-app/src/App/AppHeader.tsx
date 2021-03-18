@@ -17,6 +17,8 @@ import NotificationsIcon from '@material-ui/icons/Notifications'
 import MoreIcon from '@material-ui/icons/MoreVert'
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket'
 import { HeaderState } from './AppState'
+import { useHistory } from 'react-router-dom'
+import { Link } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -84,10 +86,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const AppHeader: React.FC<HeaderState> = (props: HeaderState) => {
     const classes = useStyles()
-
-    useEffect(() => {
-        console.log(props)
-    })
+    const history = useHistory()
 
     const isMenuOpen = false
     const isMobileMenuOpen = false
@@ -172,8 +171,16 @@ export const AppHeader: React.FC<HeaderState> = (props: HeaderState) => {
                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="open drawer">
                         <MenuIcon />
                     </IconButton>
-                    <Typography className={classes.title} variant="h6" noWrap>
-                        Mix Kilo
+                    <Typography className={classes.title} noWrap>
+                        <Link
+                            component="button"
+                            variant="h6"
+                            underline="none"
+                            onClick={() => history.push('/')}
+                            color="inherit"
+                        >
+                            Mix Kilo
+                        </Link>
                     </Typography>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
@@ -195,7 +202,7 @@ export const AppHeader: React.FC<HeaderState> = (props: HeaderState) => {
                     </div>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
-                        <IconButton aria-label="show 4 new mails" color="inherit">
+                        <IconButton aria-label="show 4 new mails" color="inherit" onClick={() => history.push('/cart')}>
                             <Badge badgeContent={props.shoppingCartItems} color="secondary">
                                 <ShoppingBasketIcon />
                             </Badge>

@@ -1,9 +1,13 @@
-import {ShoppingCart} from "./ShoppingCartTypes"
+import React from 'react'
+import { AppHeader } from '../../App/AppHeader'
+import { AppState } from '../../App/AppState'
+import { ShoppingCart } from './ShoppingCartTypes'
 
-export const Cart : React.FC<{}> = () => {
-
+export const Cart: React.FC<AppState> = (props: AppState) => {
     return (
-        <p>SHOPPING CART COMING SOON</p>
+        <>
+            <AppHeader {...props.headerState} />
+            <p>SHOPPING CART COMING SOON</p>
+        </>
     )
-
 }

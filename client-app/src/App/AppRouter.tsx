@@ -1,14 +1,13 @@
 import * as React from 'react'
 import { useEffect, useState } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { Product } from '../Components/ProductOverview/Product/ProductTypes'
 import { ProductOverview } from '../Components/ProductOverview/ProductOverview'
-import { setProductOverView, setProducts, setSearchBarItems } from '../Components/ProductOverview/ProductOverviewUtils'
+import { setProducts } from '../Components/ProductOverview/ProductOverviewUtils'
 import { Cart } from '../Components/ShoppingCart/ShoppingCart'
 import { HttpGet } from './AppApi'
 import { AppHeader } from './AppHeader'
 import { AppState, initialState } from './AppState'
-import { handelSearch } from './AppUtils'
 
 export const Router: React.FC = () => {
     const [appState, setAppstate] = useState<AppState>(() => initialState())
@@ -27,10 +26,11 @@ export const Router: React.FC = () => {
 
     return appState.productOverviewState.products.data != 'loading' &&
         appState.productOverviewState.products.data != 'failed' ? (
-        <>
-            <Route path="/" exact={true} render={() => <ProductOverview {...appState} /> } />
-            <Route path="/cart" exact={true} render={() => <Cart />} />
-        </>
+        <Switch>
+            <Route path="/" exact={true} render={() => <ProductOverview {...appState} />} />
+            <Route path="/cart" exact={true} render={() => <Cart {...appState}/>} />
+        </Switch>
+        
     ) : (
         <p>loading</p>
     )
