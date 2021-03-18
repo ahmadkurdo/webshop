@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import * as React from 'react'
+import  { useEffect } from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -15,10 +16,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
-import { AppState, HeaderState } from './AppState';
-import { Entity } from 'ts-lenses';
-import { Product } from '../Components/ProductOverview/Product/ProductTypes';
-import { handelSearch } from './AppUtils';
+import {  HeaderState } from './AppState';
 
 const useStyles = makeStyles((theme) => ({
   grow: {

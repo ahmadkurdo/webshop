@@ -13,6 +13,8 @@ export interface Fun<input,output>{
 
 export type Action<T> = (_ : T) => T
 
+export type Updater<T> = (_ : T) => void | undefined
+
 export type Setter<U,T> = (newVal: U) => (prevState: T) =>  T 
 
 export interface ApiState<T> {

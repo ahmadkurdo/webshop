@@ -4,7 +4,8 @@ import { ProductOverviewState } from "../Components/ProductOverview/ProductOverv
 import { SearchBarState } from "../Components/ProductOverview/SearchBar/SearchBarState";
 import { ShoppingCart } from "../Components/ShoppingCart/ShoppingCartTypes";
 import { Fun } from "./AppTypes";
-import { handelSearch, makeFun } from "./AppUtils";
+import { handelSearch,} from "./AppUtils";
+import {addItemsToShoppingCart} from "../Components/ProductOverview/Product/ProductUtils"
 
 export interface AppState{
     headerState : HeaderState
@@ -14,19 +15,20 @@ export interface AppState{
     
     
   }
-// const createUdater = makeFun<Fun<string, SetStateAction<AppState>>, Fun<string, void>>()
-const createUpdater = <T>(updater:Fun<T,SetStateAction<AppState>>, stateSetter: React.Dispatch<React.SetStateAction<AppState>>) => (e:T) => stateSetter(updater(e))
-export interface HeaderState {
-          shoppingCartItems: number
-          recievedMessages: number
-          searchbarState : SearchBarState<Product[], string>
 
-        
-         }
+export interface HeaderState {
+    shoppingCartItems: number
+    recievedMessages: number
+    searchbarState : SearchBarState<Product[], string>
+
+  
+   }
+const createUpdater = <T>(updater:Fun<T,SetStateAction<AppState>>, stateSetter: React.Dispatch<React.SetStateAction<AppState>>) => (e:T) => stateSetter(updater(e))
 
 export const initialState = (stateSetter?:React.Dispatch<React.SetStateAction<AppState>>): AppState => (
     {    productOverviewState : {
            products : {data:'loading'},
+           addToCart : stateSetter? createUpdater(addItemsToShoppingCart, stateSetter) : undefined
        
           },
           headerState : {
@@ -43,9 +45,7 @@ export const initialState = (stateSetter?:React.Dispatch<React.SetStateAction<Ap
 
         shoppingCart: {
           products : []
-        }
-
-        
+        }    
        })
 
 

@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import * as React from 'react'
+import { Component } from 'react'
 import { Accordion, Icon } from 'semantic-ui-react'
 
 export default class AccordionExampleStyled extends Component {

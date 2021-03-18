@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react"
+import * as React from 'react'
+import  { useEffect, useState } from "react"
 import { Route } from "react-router-dom"
 import { Product } from "../Components/ProductOverview/Product/ProductTypes"
 import { ProductOverview } from "../Components/ProductOverview/ProductOverview"
