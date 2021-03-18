@@ -20,10 +20,10 @@ export const ProductOverview : React.FC<AppState> = (props : AppState) =>  {
         </Grid>
       </Grid>
       <Grid container   spacing={3} alignItems="center" justify="center" direction="row">
-        { props.productOverviewState.products.data.data.map( p => renderProducts(p))} :  <p>Loading</p>
+        { props.productOverviewState.products.data.data.map( p => renderProducts(p))}
       </Grid>
       </> :
-      <p>laoding</p>
+      <p>loading</p>
     )
 }
 

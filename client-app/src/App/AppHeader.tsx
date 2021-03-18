@@ -178,7 +178,6 @@ export const AppHeader : React.FC<HeaderState> =  (props : HeaderState) => {
   );
 
   return (
-    props.searchbarState.updateItems?
       <div className={classes.grow}>
         <AppBar position="static">
           <Toolbar>
@@ -210,12 +209,12 @@ export const AppHeader : React.FC<HeaderState> =  (props : HeaderState) => {
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <IconButton aria-label="show 4 new mails" color="inherit">
-                <Badge badgeContent={4} color="secondary">
+                <Badge badgeContent={props.shoppingCartItems} color="secondary">
                   <ShoppingBasketIcon />
                 </Badge>
               </IconButton>
               <IconButton aria-label="show 17 new notifications" color="inherit">
-                <Badge badgeContent={17} color="secondary">
+                <Badge badgeContent={props.recievedMessages} color="secondary">
                   <NotificationsIcon />
                 </Badge>
               </IconButton>
@@ -246,8 +245,6 @@ export const AppHeader : React.FC<HeaderState> =  (props : HeaderState) => {
         {renderMobileMenu}
         {renderMenu}
       </div> 
-      
-      : <p>loading</p>
   );
 }
 
