@@ -28,8 +28,8 @@ export const Router: React.FC = () => {
     return appState.productOverviewState.products.data != 'loading' &&
         appState.productOverviewState.products.data != 'failed' ? (
         <>
-            <Route path="/" render={() => <ProductOverview {...appState} />} />
-            <Route path="/cart" render={() => <Cart />} />{' '}
+            <Route path="/" exact={true} render={() => <ProductOverview {...appState} /> } />
+            <Route path="/cart" exact={true} render={() => <Cart />} />
         </>
     ) : (
         <p>loading</p>
