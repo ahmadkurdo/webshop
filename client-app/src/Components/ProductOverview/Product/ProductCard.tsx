@@ -9,31 +9,37 @@ import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import { Product } from './ProductTypes';
-import { Grid } from '@material-ui/core';
+import { Box, Grid } from '@material-ui/core';
+import CssBaseLine from '@material-ui/core'
 
 
 export const ProductCard : React.FC<Product> = (props : Product) =>  {
  
   return (
-  <Grid item xs={10} md={4}>
-    <Card>
-      <CardHeader title={props.name}/>
-      <CardMedia image="https://oldnavy.gap.com/webcontent/0017/162/066/cn17162066.jpg" title="Paella dish"/>
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {props.description}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to shopping car">
-          <AddShoppingCartIcon />
-        </IconButton>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-      </CardActions>      
-    </Card>
-  </Grid>
+
+    <>
+    <Grid item xs={10} md={4}>
+        <Card >
+          <CardHeader title={props.name}/>
+            <CardMedia image={props.image} title="Paella dish" style={{ height: 0 , paddingTop: '56.25%'}}/>
+          <CardContent>
+            <Typography variant="body2" color="textSecondary" component="p">
+              {props.description}
+            </Typography>
+          </CardContent>
+          <CardActions disableSpacing>
+            <IconButton aria-label="add to shopping car">
+              <AddShoppingCartIcon />
+            </IconButton>
+            <IconButton aria-label="add to favorites">
+              <FavoriteIcon />
+            </IconButton>
+          </CardActions>      
+        </Card>
+    </Grid>
+    
+    </>
+
   );
 }
 

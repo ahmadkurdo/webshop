@@ -6,7 +6,7 @@ import {initialState } from './App/AppState';
 
 ReactDOM.render(
 <BrowserRouter>
-  <Router {...initialState()}/>
+  <Router />
 </BrowserRouter>,document.getElementById('root'));
 
 reportWebVitals();
