@@ -1,6 +1,3 @@
-import { SetStateAction } from "react";
-import { Fun } from "../../../App/AppTypes";
-
 export interface SearchBarState<T,S>{
     loading : boolean,
     results : T,

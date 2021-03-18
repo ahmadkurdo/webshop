@@ -21,3 +21,7 @@ export interface ApiState<T> {
     data?: T 
     status: 'Loading' | 'Loaded' | 'Failed' | 'Unauthorized'
   }
+export interface HttpResponse<T> extends Response {
+    parsedBody?: T;
+  }
+  

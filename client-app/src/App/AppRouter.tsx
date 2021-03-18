@@ -4,23 +4,11 @@ import { Route } from "react-router-dom"
 import { Product } from "../Components/ProductOverview/Product/ProductTypes"
 import { ProductOverview } from "../Components/ProductOverview/ProductOverview"
 import { setProductOverView, setProducts, setSearchBarItems } from "../Components/ProductOverview/ProductOverviewUtils"
+import { HttpGet } from './AppApi'
 import { AppHeader } from "./AppHeader"
 import { AppState, initialState } from "./AppState"
 import { handelSearch } from "./AppUtils"
-// import { setUpdater } from "./AppUtils"
-export async function HttpGet<T>(
-    request: RequestInfo
-  ): Promise<HttpResponse<T>> {
-    const response: HttpResponse<T> = await fetch(
-      request
-    );
-    response.parsedBody = await response.json();
-    return response;
-  }
-  export interface HttpResponse<T> extends Response {
-    parsedBody?: T;
-  }
-  
+
 export const Router : React.FC = () =>  {
     const [appState, setAppstate] = useState<AppState>(() => initialState())
     useEffect(() => {
