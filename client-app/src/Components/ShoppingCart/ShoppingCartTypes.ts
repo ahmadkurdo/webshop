@@ -2,7 +2,7 @@ import { Product } from "../ProductOverview/Product/ProductTypes";
 
 export type ShoppingCart = {
   products: Product[];
-  // total: number
+  // : number
 };
 
 export type ShoppingCartItems = {
