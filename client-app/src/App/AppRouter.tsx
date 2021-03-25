@@ -14,7 +14,7 @@ export const Router: React.FC = () => {
     useEffect(() => {
         setAppstate(initialState(setAppstate))
         HttpGet<Product[]>('http://localhost:5000/products/1').then((response) => {
-            ;[setProducts].map((setter) =>
+            [setProducts].map((setter) =>
                 response.parsedBody != undefined && response.ok ? setAppstate(setter(response.parsedBody)) : undefined
             )
         })
@@ -35,3 +35,4 @@ export const Router: React.FC = () => {
         <p>loading</p>
     )
 }
+

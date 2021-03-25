@@ -1,11 +1,11 @@
 import { Product } from "../ProductOverview/Product/ProductTypes";
 
 export type ShoppingCart = {
-  products: Product[];
+  products: ShoppingCartItem[];
   // : number
 };
 
-export type ShoppingCartItems = {
+export type ShoppingCartItem = {
   item: Product;
   numberOfItems: number;
 };
