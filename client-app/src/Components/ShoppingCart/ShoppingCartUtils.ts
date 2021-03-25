@@ -8,12 +8,12 @@ import { ShoppingCartItem } from './ShoppingCartTypes'
 export const updateShoppingCartItemState = makeFun<
     Fun<ShoppingCartItem[], ShoppingCartItem[]>,
     Fun<Fun<number, number>, SetStateAction<AppState>>
->((callBack: Fun<ShoppingCartItem[], ShoppingCartItem[]>) =>
-    makeFun((callback2: Fun<number, number>) =>
+>((shoppingCartItemsCallBack: Fun<ShoppingCartItem[], ShoppingCartItem[]>) =>
+    makeFun((shoppingCartBadgecallback: Fun<number, number>) =>
         makeFun<AppState, AppState>((state: AppState) =>
             Entity(state)
-                .setIn('headerState', (hs) => hs.set('shoppingCartItems', callback2))
-                .setIn('shoppingCart', (shc) => shc.set('products', callBack))
+                .setIn('headerState', (hs) => hs.set('shoppingCartItems', shoppingCartBadgecallback))
+                .setIn('shoppingCart', (shc) => shc.set('products', shoppingCartItemsCallBack))
                 .commit()
         )
     )
