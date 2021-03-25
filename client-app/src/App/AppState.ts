@@ -6,7 +6,7 @@ import { ShoppingCart } from '../Components/ShoppingCart/ShoppingCartTypes'
 import { Fun } from './AppTypes'
 import { handelSearch } from './AppUtils'
 import { addItemsToShoppingCart } from '../Components/ProductOverview/Product/ProductUtils'
-
+import {handleIncrement,handleDecrement,handleRemove} from '../Components/ShoppingCart/ShoppingCartUtils'
 export interface AppState {
     headerState: HeaderState
     productOverviewState: ProductOverviewState
@@ -43,5 +43,9 @@ export const initialState = (stateSetter?: React.Dispatch<React.SetStateAction<A
 
     shoppingCart: {
         products: [],
+        incrementItem: stateSetter ? createUpdater(handleIncrement, stateSetter) : undefined ,
+        decrementItem: stateSetter ? createUpdater(handleDecrement, stateSetter) : undefined ,
+        removeItem: stateSetter ? createUpdater(handleRemove, stateSetter) : undefined ,
+
     },
 })

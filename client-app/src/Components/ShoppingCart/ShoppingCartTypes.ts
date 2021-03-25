@@ -1,11 +1,15 @@
-import { Product } from "../ProductOverview/Product/ProductTypes";
+
+import {  Updater } from '../../App/AppTypes'
+import { Product } from '../ProductOverview/Product/ProductTypes'
 
 export type ShoppingCart = {
-  products: ShoppingCartItem[];
-  // : number
-};
+    products: ShoppingCartItem[]
+    incrementItem?: Updater<ShoppingCartItem>
+    decrementItem?: Updater<ShoppingCartItem>
+    removeItem?: Updater<ShoppingCartItem>
+}
 
 export type ShoppingCartItem = {
-  item: Product;
-  numberOfItems: number;
-};
+    item: Product
+    numberOfItems: number
+}

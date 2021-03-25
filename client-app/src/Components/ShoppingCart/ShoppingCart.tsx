@@ -42,15 +42,15 @@ export const Cart: React.FC<AppState> = (props: AppState) => {
                             <TableCell align="center">Amount</TableCell>
                         </TableRow>
                     </TableHead>
-                    <TableBody>{renderShoppingCartItems(props.shoppingCart.products)}</TableBody>
+                    <TableBody>{renderShoppingCartItems(props.shoppingCart)}</TableBody>
                 </Table>
             </TableContainer>
         </>
     )
 }
 
-const renderShoppingCartItems = (items: ShoppingCartItem[]) =>
-    items.map((item) => (
+const renderShoppingCartItems = (cart: ShoppingCart) =>
+    cart.products.map((item) => (
         <TableRow key={item.item.id}>
             <TableCell component="th" scope="row">
                 <img src={item.item.image} />
@@ -61,13 +61,13 @@ const renderShoppingCartItems = (items: ShoppingCartItem[]) =>
             <TableCell align="center">
                 {item.numberOfItems}
                 <ButtonGroup variant="contained" color="primary" aria-label="outlined primary button group">
-                    <Button>+</Button>
-                    <Button>-</Button>
+                    <Button onClick={ e => cart.incrementItem != undefined? cart.incrementItem(item): console.log("Increment item failed")}>+</Button>
+                    <Button onClick={ e => cart.decrementItem != undefined? cart.decrementItem(item): console.log("Decrement item failed")}>-</Button>
                 </ButtonGroup>
             </TableCell>
             <TableCell align="center">
                 {item.item.description}
-                <Button variant="contained" color="secondary" startIcon={<ClearIcon />} />
+                <Button onClick={ e => cart.removeItem != undefined? cart.removeItem(item): console.log("Remove item failed")} variant="contained" color="secondary" startIcon={<ClearIcon />} />
             </TableCell>
         </TableRow>
     ))
