@@ -61,3 +61,8 @@ export const handleDecrement = makeFun<ShoppingCartItem, SetStateAction<AppState
 export const handleRemove = makeFun<ShoppingCartItem, SetStateAction<AppState>>((item) =>
     deleteItem.then(updateShoppingCartItemState)(item)(decrementNum(item.numberOfItems))
 )
+
+export const calculateTotalCost = (cart: ShoppingCartItem[]): number =>
+    cart.reduce((acc, cart) => {
+        return acc + cart.numberOfItems * cart.item.price
+    }, 0)

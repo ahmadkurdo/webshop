@@ -10,6 +10,7 @@ import {
     TableContainer,
     TableHead,
     TableRow,
+    Typography,
 } from '@material-ui/core'
 import React from 'react'
 import { AppHeader } from '../../App/AppHeader'
@@ -17,6 +18,7 @@ import { AppState } from '../../App/AppState'
 import { Product } from '../ProductOverview/Product/ProductTypes'
 import { ShoppingCart, ShoppingCartItem } from './ShoppingCartTypes'
 import ClearIcon from '@material-ui/icons/Clear'
+import { calculateTotalCost } from './ShoppingCartUtils'
 
 const useStyles = makeStyles({
     table: {
@@ -43,6 +45,17 @@ export const Cart: React.FC<AppState> = (props: AppState) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>{renderShoppingCartItems(props.shoppingCart)}</TableBody>
+                    {props.shoppingCart.products.length > 0 ? (
+                        <Typography variant="h6" align="right">
+                            {' '}
+                            Sub-Total: {calculateTotalCost(props.shoppingCart.products)}${' '}
+                            <Button variant="contained" color="primary">
+                                Checkout
+                            </Button>{' '}
+                        </Typography>
+                    ) : (
+                        <></>
+                    )}
                 </Table>
             </TableContainer>
         </>
@@ -61,13 +74,36 @@ const renderShoppingCartItems = (cart: ShoppingCart) =>
             <TableCell align="center">
                 {item.numberOfItems}
                 <ButtonGroup variant="contained" color="primary" aria-label="outlined primary button group">
-                    <Button onClick={ e => cart.incrementItem != undefined? cart.incrementItem(item): console.log("Increment item failed")}>+</Button>
-                    <Button onClick={ e => cart.decrementItem != undefined? cart.decrementItem(item): console.log("Decrement item failed")}>-</Button>
+                    <Button
+                        onClick={(e) =>
+                            cart.incrementItem != undefined
+                                ? cart.incrementItem(item)
+                                : console.log('Increment item failed')
+                        }
+                    >
+                        +
+                    </Button>
+                    <Button
+                        onClick={(e) =>
+                            cart.decrementItem != undefined
+                                ? cart.decrementItem(item)
+                                : console.log('Decrement item failed')
+                        }
+                    >
+                        -
+                    </Button>
                 </ButtonGroup>
             </TableCell>
             <TableCell align="center">
                 {item.item.description}
-                <Button onClick={ e => cart.removeItem != undefined? cart.removeItem(item): console.log("Remove item failed")} variant="contained" color="secondary" startIcon={<ClearIcon />} />
+                <Button
+                    onClick={(e) =>
+                        cart.removeItem != undefined ? cart.removeItem(item) : console.log('Remove item failed')
+                    }
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<ClearIcon />}
+                />
             </TableCell>
         </TableRow>
     ))
