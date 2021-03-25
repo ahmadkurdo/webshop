@@ -42,11 +42,11 @@ export const incrementNumberOfItems = makeFun<ShoppingCartItem, ShoppingCartItem
 
 export const decrementNumberOfItems = makeFun<ShoppingCartItem, ShoppingCartItem>((sp) => ({
     ...sp,
-    numberOfItems: sp.numberOfItems - 1,
+    numberOfItems: sp.numberOfItems <= 0 ? 0 : sp.numberOfItems - 1,
 }))
 const increment = makeFun<number, number>((x) => x + 1)
 
-const decrement = makeFun<number, number>((x) => x - 1)
+const decrement = makeFun<number, number>((x) => (x <= 0 ? 0 : x - 1))
 
 const decrementNum = (num: number) => makeFun<number, number>((x) => x - num)
 
