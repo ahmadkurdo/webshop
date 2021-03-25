@@ -1,11 +1,17 @@
-import { Product } from "../ProductOverview/Product/ProductTypes";
+import { SetStateAction } from 'react'
+import { Entity } from 'ts-lenses'
+import { AppState } from '../../App/AppState'
+import { Updater } from '../../App/AppTypes'
+import { Product } from '../ProductOverview/Product/ProductTypes'
 
 export type ShoppingCart = {
-  products: Product[];
-  // total: number
-};
+    products: ShoppingCartItem[]
+    incrementItem?: Updater<ShoppingCartItem>
+    decrementItem?: Updater<ShoppingCartItem>
+    removeItem?: Updater<ShoppingCartItem>
+}
 
-export type ShoppingCartItems = {
-  item: Product;
-  numberOfItems: number;
-};
+export type ShoppingCartItem = {
+    item: Product
+    numberOfItems: number
+}
