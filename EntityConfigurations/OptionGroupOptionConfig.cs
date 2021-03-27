@@ -15,7 +15,7 @@ namespace webshop.EntityConfigurations
                 .HasForeignKey(pt => pt.OptionId);
 
             entity.HasOne(pt => pt.OptionGroup)
-                .WithMany(t => t.OptionLink)
+                .WithMany(t => t.Options)
                 .HasForeignKey(pt => pt.OptionGroupId);
 
             entity.HasData(
