@@ -31,7 +31,6 @@ namespace webshop.Models
         public decimal Price { get; set; }
         public decimal Wheight { get; set; }
         public string Image { get; set; }
-        public int Quantity { get; set; }
         public List<OptionGroup> OptionGroup { get; set; }
     }
     public class Option
@@ -39,11 +38,14 @@ namespace webshop.Models
         public int OptionId { get; set; }
         public string Type { get; set; }
         public string Name { get; set; }
+        [Newtonsoft.Json.JsonIgnore]
         public List<OptionGroupOption> OptionGroupLink { get; set; }
 
     }
     public class OptionGroupOption
     {
+        [Newtonsoft.Json.JsonIgnore]
+
         public int OptionGroupId { get; set; }
         public int OptionId { get; set; }
         public Option Option { get; set; }
