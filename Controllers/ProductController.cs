@@ -11,33 +11,36 @@ using webshop.Models;
 
 namespace webshop.Controllers
 {
-    
+
     [Route("/products/")]
     public class ProductController : Controller
     {
         private readonly Context _context;
-
-
-        public ProductController(Context context){
+        public ProductController(Context context)
+        {
             _context = context;
         }
 
         [HttpGet("{id}")]
         [Produces("application/json")]
-        public IActionResult products(int id){
+        public IActionResult products(int id)
+        {
 
-            var q = (from p in _context.Options where p.Id == id
-                     from z in _context.Products where id == z.Id 
-                     select new {
-                         product = p
+            // var q = (from p in _context.Options
+            //          where p.Id == id
+            //          from z in _context.Products
+            //          where id == z.Id
+            //          select new
+            //          {
+            //              product = p
 
-                     }).ToList();
+            //          }).ToList();
 
-            var x = _context.Products.Include( x => x.Options).ToList();
+            var x = _context.Products.Include( p => p.OptionGroup).ThenInclude( o => o.OptionLink).ThenInclude( k => k.Option);
             return Ok(x);
 
         }
-        }
- 
-    
+    }
+
+
 }
