@@ -36,19 +36,19 @@ const deleteItem = Fun<ShoppingCartItem, Fun<ShoppingCartItem[], ShoppingCartIte
 
 export const updateItemBadge = (num: number) => Fun<number, number>((x) => (x <= 0 ? 0 : x + num))
 
-export const handleIncrement = (item: ShoppingCartItem) =>
+export const handleIncrement = Fun((item: ShoppingCartItem) =>
     updateNumberOfItems(1)
     .then(updateItem)
-    .then(updateShoppingCartState)(item)(updateItemBadge(1))
+    .then(updateShoppingCartState)(item)(updateItemBadge(1)))
 
-export const handleDecrement = (item: ShoppingCartItem) =>
+export const handleDecrement = Fun((item: ShoppingCartItem) =>
     updateNumberOfItems(-1)
     .then(updateItem)
-    .then(updateShoppingCartState)(item)(updateItemBadge(-1))
+    .then(updateShoppingCartState)(item)(updateItemBadge(-1)))
 
-export const handledeleteItem = (item: ShoppingCartItem) =>
+export const handledeleteItem = Fun((item: ShoppingCartItem) =>
     deleteItem
-    .then(updateShoppingCartState)(item)(updateItemBadge(-item.numberOfItems))
+    .then(updateShoppingCartState)(item)(updateItemBadge(-item.numberOfItems)))
 
 export const incrementNumberOfItems = Fun<ShoppingCartItem, ShoppingCartItem>((sp) => ({
     ...sp,
