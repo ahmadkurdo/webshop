@@ -1,66 +1,59 @@
 import { SetStateAction } from 'react'
 import { Entity } from 'ts-lenses'
 import { AppState } from '../../App/AppState'
-import { Action, Fun } from '../../App/AppTypes'
-import { makeFun } from '../../App/AppUtils'
+import { Fun } from '../../App/AppUtils'
 import { ShoppingCartItem } from './ShoppingCartTypes'
 
-export const updateShoppingCartItemState = makeFun<
+export const updateShoppingCartState = Fun<
     Fun<ShoppingCartItem[], ShoppingCartItem[]>,
-    Fun<Fun<number, number>, SetStateAction<AppState>>
->((shoppingCartItemsCallBack: Fun<ShoppingCartItem[], ShoppingCartItem[]>) =>
-    makeFun((shoppingCartBadgecallback: Fun<number, number>) =>
-        makeFun<AppState, AppState>((state: AppState) =>
+    Fun<Fun<number, number>, Fun<AppState, AppState>>
+>((f) =>
+    Fun((g) =>
+        Fun((state) =>
             Entity(state)
-                .setIn('headerState', (hs) => hs.set('shoppingCartItems', shoppingCartBadgecallback))
-                .setIn('shoppingCart', (shc) => shc.set('products', shoppingCartItemsCallBack))
+                .setIn('shoppingCart', (shc) => shc.set('products', f))
+                .setIn('headerState', (shc) => shc.set('shoppingCartItems', g))
                 .commit()
         )
     )
 )
 
-const changeItemValue = makeFun<
-    Action<ShoppingCartItem>,
-    Fun<ShoppingCartItem, Fun<ShoppingCartItem[], ShoppingCartItem[]>>
->((callBack) =>
-    makeFun<ShoppingCartItem, Fun<ShoppingCartItem[], ShoppingCartItem[]>>((currentItem) =>
-        makeFun<ShoppingCartItem[], ShoppingCartItem[]>((currentItems) =>
-            currentItems.map((item) => (item.item.id === currentItem.item.id ? callBack(item) : item))
-        )
+export const updateItem = Fun((f: Fun<ShoppingCartItem, ShoppingCartItem>) =>
+    Fun<ShoppingCartItem[], ShoppingCartItem[]>((shc) => shc.map(f))
+)
+export const check = (updater: Fun<ShoppingCartItem, ShoppingCartItem>) =>
+    Fun((newItem: ShoppingCartItem) =>
+        Fun((oldItem: ShoppingCartItem) => {
+            return oldItem.item.id === newItem.item.id ? updater(oldItem) : oldItem
+        })
     )
+export const updateNumberOfItems = (num: number) =>
+    check(Fun((item) => (item.numberOfItems <= 0 ? item : { ...item, numberOfItems: item.numberOfItems + num })))
+
+const deleteItem = Fun<ShoppingCartItem, Fun<ShoppingCartItem[], ShoppingCartItem[]>>((itemToRemove) =>
+    Fun((currentItems) => currentItems.filter((item) => item.item.id !== itemToRemove.item.id))
 )
 
-export const deleteItem = makeFun<ShoppingCartItem, Fun<ShoppingCartItem[], ShoppingCartItem[]>>((itemToRemove) =>
-    makeFun<ShoppingCartItem[], ShoppingCartItem[]>((items) =>
-        items.filter((item) => item.item.id !== itemToRemove.item.id)
-    )
-)
-export const incrementNumberOfItems = makeFun<ShoppingCartItem, ShoppingCartItem>((sp) => ({
+export const updateItemBadge = (num: number) => Fun<number, number>((x) => (x <= 0 ? 0 : x + num))
+
+export const handleIncrement = (item: ShoppingCartItem) =>
+    updateNumberOfItems(1)
+    .then(updateItem)
+    .then(updateShoppingCartState)(item)(updateItemBadge(1))
+
+export const handleDecrement = (item: ShoppingCartItem) =>
+    updateNumberOfItems(-1)
+    .then(updateItem)
+    .then(updateShoppingCartState)(item)(updateItemBadge(-1))
+
+export const handledeleteItem = (item: ShoppingCartItem) =>
+    deleteItem
+    .then(updateShoppingCartState)(item)(updateItemBadge(-item.numberOfItems))
+
+export const incrementNumberOfItems = Fun<ShoppingCartItem, ShoppingCartItem>((sp) => ({
     ...sp,
     numberOfItems: sp.numberOfItems + 1,
 }))
-
-export const decrementNumberOfItems = makeFun<ShoppingCartItem, ShoppingCartItem>((sp) => ({
-    ...sp,
-    numberOfItems: sp.numberOfItems <= 0 ? 0 : sp.numberOfItems - 1,
-}))
-const increment = makeFun<number, number>((x) => x + 1)
-
-const decrement = makeFun<number, number>((x) => (x <= 0 ? 0 : x - 1))
-
-const decrementNum = (num: number) => makeFun<number, number>((x) => x - num)
-
-export const handleIncrement = makeFun<ShoppingCartItem, SetStateAction<AppState>>((item) =>
-    changeItemValue(incrementNumberOfItems).then(updateShoppingCartItemState)(item)(increment)
-)
-
-export const handleDecrement = makeFun<ShoppingCartItem, SetStateAction<AppState>>((item) =>
-    changeItemValue(decrementNumberOfItems).then(updateShoppingCartItemState)(item)(decrement)
-)
-
-export const handleRemove = makeFun<ShoppingCartItem, SetStateAction<AppState>>((item) =>
-    deleteItem.then(updateShoppingCartItemState)(item)(decrementNum(item.numberOfItems))
-)
 
 export const calculateTotalCost = (cart: ShoppingCartItem[]): number =>
     cart.reduce((acc, cart) => {

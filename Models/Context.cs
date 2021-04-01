@@ -14,7 +14,7 @@ namespace webshop.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            modelBuilder.ApplyConfiguration(new OptionGroupOptionConfig());       //#B
+            modelBuilder.ApplyConfiguration(new OptionGroupOptionConfig());
             modelBuilder.ApplyConfiguration(new OptionConfig());
             modelBuilder.ApplyConfiguration(new OptionGroupConfig());
             modelBuilder.ApplyConfiguration(new ProductConfig());

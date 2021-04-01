@@ -1,13 +1,12 @@
 import { SetStateAction } from 'react'
 import { Entity } from 'ts-lenses'
 import { AppState } from '../../../App/AppState'
-import { Fun } from '../../../App/AppTypes'
-import { makeFun } from '../../../App/AppUtils'
+import { Fun } from '../../../App/AppUtils'
 import { ShoppingCartItem } from '../../ShoppingCart/ShoppingCartTypes'
 import { incrementNumberOfItems } from '../../ShoppingCart/ShoppingCartUtils'
 import { Product } from './ProductTypes'
 
-export const addItemsToShoppingCart = makeFun<Product, SetStateAction<AppState>>(
+export const addItemsToShoppingCart = Fun<Product, SetStateAction<AppState>>(
     (itemToAdd: Product) => (state: AppState) =>
         Entity(state)
             .setIn('headerState', (hs) => hs.set('shoppingCartItems', (prev) => prev + 1))
@@ -23,8 +22,8 @@ export const addItemsToShoppingCart = makeFun<Product, SetStateAction<AppState>>
 
 export const createNewItem = (product: Product): ShoppingCartItem => ({ item: product, numberOfItems: 1 })
 
-export const createShoppingCartItem = makeFun<ShoppingCartItem[], Fun<Product, ShoppingCartItem>>((items) =>
-    makeFun((item) =>
+export const createShoppingCartItem = Fun<ShoppingCartItem[], Fun<Product, ShoppingCartItem>>((items) =>
+    Fun((item) =>
         items.filter((sp) => sp.item.id === item.id)[0]
             ? items.filter((sp) => sp.item.id)[0]
             : { item: item, numberOfItems: 0 }
