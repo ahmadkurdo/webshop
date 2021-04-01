@@ -2,7 +2,7 @@
 
 namespace webshop.Migrations
 {
-    public partial class ThirdMigratio : Migration
+    public partial class ChangeColumnNames : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -2,20 +2,20 @@
 
 namespace webshop.Migrations
 {
-    public partial class ThirdMigration : Migration
+    public partial class RemoveQuantityFromProducts : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "OptionTypeId",
-                table: "Options");
+                name: "Quantity",
+                table: "Products");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<int>(
-                name: "OptionTypeId",
-                table: "Options",
+                name: "Quantity",
+                table: "Products",
                 type: "integer",
                 nullable: false,
                 defaultValue: 0);
