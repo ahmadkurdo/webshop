@@ -28,13 +28,13 @@ export const check = (updater: Fun<ShoppingCartItem, ShoppingCartItem>) =>
         })
     )
 export const updateNumberOfItems = (num: number) =>
-    check(Fun((item) => (item.numberOfItems <= 0 ? item : { ...item, numberOfItems: item.numberOfItems + num })))
+    check(Fun((item) => (item.numberOfItems <= 0 && num <= 0 ? item : { ...item, numberOfItems: item.numberOfItems + num })))
 
 const deleteItem = Fun<ShoppingCartItem, Fun<ShoppingCartItem[], ShoppingCartItem[]>>((itemToRemove) =>
     Fun((currentItems) => currentItems.filter((item) => item.item.id !== itemToRemove.item.id))
 )
 
-export const updateItemBadge = (num: number) => Fun<number, number>((x) => (x <= 0 ? 0 : x + num))
+export const updateItemBadge = (num: number) => Fun<number, number>((x) => (x <= 0 && num <= 0 ? 0 : x + num))
 
 export const handleIncrement = Fun((item: ShoppingCartItem) =>
     updateNumberOfItems(1)
