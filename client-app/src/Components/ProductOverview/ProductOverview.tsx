@@ -5,6 +5,7 @@ import { AppState } from '../../App/AppState'
 import { Updater } from '../../App/AppTypes'
 import { ProductCard } from './Product/ProductCard'
 import { Product } from './Product/ProductTypes'
+import Loader from 'react-loader-spinner'
 
 export const renderProducts = (p: Product, e?: Updater<Product>): JSX.Element => (
     <ProductCard product={p} addToCart={e} />
@@ -26,6 +27,6 @@ export const ProductOverview: React.FC<AppState> = (props: AppState) => {
             </Grid>
         </>
     ) : (
-        <p>loading</p>
+        <Loader type="Oval" color="#dedede" radius={40} />
     )
 }
